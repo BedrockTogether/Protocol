@@ -134,22 +134,10 @@ public class EncryptionUtils {
             Preconditions.checkArgument(node instanceof String, "Chain node is not a string");
             JWSObject jwt = JWSObject.parse((String) node);
 
-            // x509 cert is expected in every claim
-            URI x5u = jwt.getHeader().getX509CertURL();
-            if (x5u == null) {
-                return false;
-            }
-
-            ECPublicKey expectedKey = EncryptionUtils.generateKey(jwt.getHeader().getX509CertURL().toString());
-            // First key is self-signed
             if (lastKey == null) {
-                lastKey = expectedKey;
-            } else if (!lastKey.equals(expectedKey)) {
-                return false;
-            }
-
-            if (!verifyJwt(jwt, lastKey)) {
-                return false;
+                validChain = verifyJwt(jwt, MOJANG_PUBLIC_KEY);
+            } else {
+                validChain = verifyJwt(jwt, lastKey);
             }
 
             if (validChain) {

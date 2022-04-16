@@ -25,6 +25,6 @@ public class CodeBuilderSourcePacket extends BedrockPacket {
 
     @Override
     public BedrockPacketType getPacketType() {
-        return BedrockPacketType.CODE_BUILDER_SOURCE_PACKET;
+        return BedrockPacketType.CODE_BUILDER_SOURCE;
     }
 }

@@ -5,6 +5,7 @@ import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.network.VarInts;
 import com.nukkitx.protocol.bedrock.data.LevelEventType;
 import com.nukkitx.protocol.bedrock.data.SoundEvent;
+import com.nukkitx.protocol.bedrock.data.command.CommandParam;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityEventType;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
@@ -50,6 +51,27 @@ public class BedrockPacketHelper_v503 extends BedrockPacketHelper_v486 {
 
         this.addLevelEvent(2000 + 37, LevelEventType.SCULK_CHARGE);
         this.addLevelEvent(2000 + 38, LevelEventType.SCULK_CHARGE_POP);
+    }
+
+    @Override
+    protected void registerCommandParams() {
+        this.addCommandParam(1, CommandParam.INT);
+        this.addCommandParam(3, CommandParam.FLOAT);
+        this.addCommandParam(4, CommandParam.VALUE);
+        this.addCommandParam(5, CommandParam.WILDCARD_INT);
+        this.addCommandParam(6, CommandParam.OPERATOR);
+        this.addCommandParam(7, CommandParam.TARGET);
+        this.addCommandParam(9, CommandParam.WILDCARD_TARGET);
+
+        this.addCommandParam(16, CommandParam.FILE_PATH);
+
+        this.addCommandParam(38, CommandParam.STRING);
+        this.addCommandParam(46, CommandParam.BLOCK_POSITION);
+        this.addCommandParam(47, CommandParam.POSITION);
+        this.addCommandParam(50, CommandParam.MESSAGE);
+        this.addCommandParam(52, CommandParam.TEXT);
+        this.addCommandParam(56, CommandParam.JSON);
+        this.addCommandParam(69, CommandParam.COMMAND);
     }
 
     @Override

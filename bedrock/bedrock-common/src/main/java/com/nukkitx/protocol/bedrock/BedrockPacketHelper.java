@@ -12,10 +12,12 @@ import com.nukkitx.network.util.Preconditions;
 import com.nukkitx.protocol.bedrock.data.*;
 import com.nukkitx.protocol.bedrock.data.command.*;
 import com.nukkitx.protocol.bedrock.data.entity.*;
+import com.nukkitx.protocol.bedrock.data.inventory.ContainerSlotType;
 import com.nukkitx.protocol.bedrock.data.inventory.InventoryActionData;
 import com.nukkitx.protocol.bedrock.data.inventory.InventorySource;
 import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
 import com.nukkitx.protocol.bedrock.data.inventory.ItemStackRequest;
+import com.nukkitx.protocol.bedrock.data.inventory.descriptor.ItemDescriptorWithCount;
 import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.StackRequestActionType;
 import com.nukkitx.protocol.bedrock.data.skin.AnimationData;
 import com.nukkitx.protocol.bedrock.data.skin.ImageData;
@@ -57,6 +59,7 @@ public abstract class BedrockPacketHelper {
     protected final Int2ObjectBiMap<LevelEventType> levelEvents = new Int2ObjectBiMap<>();
     protected final Int2ObjectBiMap<CommandParam> commandParams = new Int2ObjectBiMap<>();
     protected final Int2ObjectBiMap<ResourcePackType> resourcePackTypes = new Int2ObjectBiMap<>();
+    protected final Int2ObjectBiMap<ContainerSlotType> containerSlotTypes = new Int2ObjectBiMap<>();
 
     protected BedrockPacketHelper() {
         gameRuleTypes.defaultReturnValue(-1);
@@ -70,6 +73,7 @@ public abstract class BedrockPacketHelper {
         this.registerLevelEvents();
         this.registerCommandParams();
         this.registerResourcePackTypes();
+        this.registerContainerSlotTypes();
     }
 
     protected final void addGameRuleType(int index, Class<?> clazz) {
@@ -208,6 +212,8 @@ public abstract class BedrockPacketHelper {
     protected abstract void registerResourcePackTypes();
 
     protected abstract void registerLevelEvents();
+
+    protected abstract void registerContainerSlotTypes();
 
     public abstract EntityLinkData readEntityLink(ByteBuf buffer);
 
@@ -743,6 +749,22 @@ public abstract class BedrockPacketHelper {
     }
 
     public void readEntityProperties(ByteBuf buffer, EntityProperties properties) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void writeContainerSlotType(ByteBuf buffer, ContainerSlotType slotType) {
+        throw new UnsupportedOperationException();
+    }
+
+    public ContainerSlotType readContainerSlotType(ByteBuf buffer) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected ItemDescriptorWithCount readIngredient(ByteBuf buffer, BedrockPacketHelper helper) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected void writeIngredient(ByteBuf buffer, ItemDescriptorWithCount ingredient) {
         throw new UnsupportedOperationException();
     }
 }

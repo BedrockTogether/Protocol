@@ -1,4 +1,4 @@
-package com.nukkitx.protocol.bedrock.v582.serializer;
+package com.nukkitx.protocol.bedrock.v589.serializer;
 
 import com.nukkitx.protocol.bedrock.BedrockPacketHelper;
 import com.nukkitx.protocol.bedrock.BedrockSession;

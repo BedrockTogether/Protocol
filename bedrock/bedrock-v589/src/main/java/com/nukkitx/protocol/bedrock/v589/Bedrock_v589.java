@@ -1,4 +1,4 @@
-package com.nukkitx.protocol.bedrock.v582;
+package com.nukkitx.protocol.bedrock.v589;
 
 import com.nukkitx.protocol.bedrock.BedrockPacketCodec;
 import com.nukkitx.protocol.bedrock.packet.*;
@@ -41,7 +41,7 @@ import com.nukkitx.protocol.bedrock.v560.serializer.UpdateClientInputLocksSerial
 import com.nukkitx.protocol.bedrock.v567.serializer.ClientCheatAbilitySerializer_v567;
 import com.nukkitx.protocol.bedrock.v567.serializer.CommandRequestSerializer_v567;
 import com.nukkitx.protocol.bedrock.v567.serializer.CraftingDataSerializer_v567;
-import com.nukkitx.protocol.bedrock.v582.serializer.StartGameSerializer_v589;
+import com.nukkitx.protocol.bedrock.v589.serializer.StartGameSerializer_v589;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

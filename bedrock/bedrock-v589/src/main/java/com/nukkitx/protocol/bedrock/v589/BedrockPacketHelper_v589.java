@@ -1,4 +1,4 @@
-package com.nukkitx.protocol.bedrock.v582;
+package com.nukkitx.protocol.bedrock.v589;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -9,9 +9,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class StartGameSerializer_v588 extends StartGameSerializer_v582 {
+public class StartGameSerializer_v589 extends StartGameSerializer_v582 {
 
-    public static final StartGameSerializer_v588 INSTANCE = new StartGameSerializer_v588();
+    public static final StartGameSerializer_v589 INSTANCE = new StartGameSerializer_v589();
 
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet, BedrockSession session) {

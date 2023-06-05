@@ -176,7 +176,7 @@ public class StartGamePacket extends BedrockPacket {
      */
     private boolean exportedFromEditor;
     /**
-     * @since v588
+     * @since v589
      */
     private NetworkPermissions networkPermissions = NetworkPermissions.DEFAULT;
 

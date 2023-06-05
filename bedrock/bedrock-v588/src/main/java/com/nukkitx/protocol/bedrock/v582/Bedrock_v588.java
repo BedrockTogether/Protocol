@@ -41,16 +41,16 @@ import com.nukkitx.protocol.bedrock.v560.serializer.UpdateClientInputLocksSerial
 import com.nukkitx.protocol.bedrock.v567.serializer.ClientCheatAbilitySerializer_v567;
 import com.nukkitx.protocol.bedrock.v567.serializer.CommandRequestSerializer_v567;
 import com.nukkitx.protocol.bedrock.v567.serializer.CraftingDataSerializer_v567;
-import com.nukkitx.protocol.bedrock.v582.serializer.StartGameSerializer_v588;
+import com.nukkitx.protocol.bedrock.v582.serializer.StartGameSerializer_v589;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Bedrock_v588 {
-    public static final BedrockPacketCodec V588_CODEC = BedrockPacketCodec.builder()
+public class Bedrock_v589 {
+    public static final BedrockPacketCodec V589_CODEC = BedrockPacketCodec.builder()
             .raknetProtocolVersion(11)
-            .protocolVersion(588)
+            .protocolVersion(589)
             .minecraftVersion("1.20.0")
-            .helper(BedrockPacketHelper_v588.INSTANCE)
+            .helper(BedrockPacketHelper_v589.INSTANCE)
             .registerPacket(LoginPacket.class, LoginSerializer_v291.INSTANCE, 1)
             .registerPacket(PlayStatusPacket.class, PlayStatusSerializer_v291.INSTANCE, 2)
             .registerPacket(ServerToClientHandshakePacket.class, ServerToClientHandshakeSerializer_v291.INSTANCE, 3)
@@ -61,7 +61,7 @@ public class Bedrock_v588 {
             .registerPacket(ResourcePackClientResponsePacket.class, ResourcePackClientResponseSerializer_v291.INSTANCE, 8)
             .registerPacket(TextPacket.class, TextSerializer_v554.INSTANCE, 9)
             .registerPacket(SetTimePacket.class, SetTimeSerializer_v291.INSTANCE, 10)
-            .registerPacket(StartGamePacket.class, StartGameSerializer_v588.INSTANCE, 11)
+            .registerPacket(StartGamePacket.class, StartGameSerializer_v589.INSTANCE, 11)
             .registerPacket(AddPlayerPacket.class, AddPlayerSerializer_v557.INSTANCE, 12)
             .registerPacket(AddEntityPacket.class, AddEntitySerializer_v557.INSTANCE, 13)
             .registerPacket(RemoveEntityPacket.class, RemoveEntitySerializer_v291.INSTANCE, 14)

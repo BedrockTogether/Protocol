@@ -1,4 +1,4 @@
-package com.nukkitx.protocol.bedrock.v589;
+package com.nukkitx.protocol.bedrock.v582;
 
 import com.nukkitx.protocol.bedrock.v567.BedrockPacketHelper_v567;
 import lombok.AccessLevel;

@@ -4,6 +4,7 @@ import com.nukkitx.protocol.bedrock.BedrockPacketHelper;
 import com.nukkitx.protocol.bedrock.BedrockSession;
 import com.nukkitx.protocol.bedrock.data.NetworkPermissions;
 import com.nukkitx.protocol.bedrock.packet.StartGamePacket;
+import com.nukkitx.protocol.bedrock.v582.serializer.StartGameSerializer_v582;
 import io.netty.buffer.ByteBuf;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

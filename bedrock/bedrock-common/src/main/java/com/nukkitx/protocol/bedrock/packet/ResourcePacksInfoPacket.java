@@ -18,6 +18,10 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
     private boolean forcedToAccept;
     private boolean scriptingEnabled;
     private boolean forcingServerPacksEnabled;
+    /**
+     * @since v618
+     */
+    private List<CDNEntry> CDNEntries = new ObjectArrayList<>();
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {
@@ -38,5 +42,11 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
         private final String contentId;
         private final boolean scripting;
         private final boolean raytracingCapable;
+    }
+
+    @Value
+    public static class CDNEntry {
+        private final String packId;
+        private final String remoteUrl;
     }
 }

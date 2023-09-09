@@ -46,5 +46,6 @@
         <module>bedrock-v567</module>
         <module>bedrock-v582</module>
         <module>bedrock-v589</module>
+        <module>bedrock-v618</module>
     </modules>
 </project>

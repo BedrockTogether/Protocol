@@ -51,7 +51,7 @@ public class Bedrock_v618 {
             .raknetProtocolVersion(11)
             .protocolVersion(618)
             .minecraftVersion("1.20.30")
-            .helper(BedrockPacketHelper_v589.INSTANCE)
+            .helper(BedrockPacketHelper_v618.INSTANCE)
             .registerPacket(LoginPacket.class, LoginSerializer_v291.INSTANCE, 1)
             .registerPacket(PlayStatusPacket.class, PlayStatusSerializer_v291.INSTANCE, 2)
             .registerPacket(ServerToClientHandshakePacket.class, ServerToClientHandshakeSerializer_v291.INSTANCE, 3)

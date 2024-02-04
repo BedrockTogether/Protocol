@@ -27,6 +27,10 @@ public class LevelChunkPacket extends BedrockPacket {
     private int subChunkLimit;
     private final LongList blobIds = new LongArrayList();
     private byte[] data;
+    /**
+     * @since v649
+     */
+    private int dimension;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {

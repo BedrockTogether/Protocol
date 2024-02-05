@@ -36,6 +36,8 @@ public final class BedrockPacketCodec {
     private final BedrockPacketHelper helper;
     @Getter
     private final int raknetProtocolVersion;
+    @Getter
+    private final boolean prefixed;
 
     public static Builder builder() {
         return new Builder();
@@ -125,6 +127,7 @@ public final class BedrockPacketCodec {
         private int raknetProtocolVersion = 10;
         private String minecraftVersion = null;
         private BedrockPacketHelper helper = null;
+        private boolean prefixed = false;
 
         public <T extends BedrockPacket> Builder registerPacket(Class<T> packetClass, BedrockPacketSerializer<T> serializer, @Nonnegative int id) {
             checkArgument(id >= 0, "id cannot be negative");
@@ -169,6 +172,11 @@ public final class BedrockPacketCodec {
             return this;
         }
 
+        public Builder prefixed(boolean prefixed) {
+            this.prefixed = prefixed;
+            return this;
+        }
+
         public BedrockPacketCodec build() {
             checkArgument(protocolVersion >= 0, "No protocol version defined");
             checkNotNull(minecraftVersion, "No Minecraft version defined");
@@ -185,7 +193,7 @@ public final class BedrockPacketCodec {
             for (Int2ObjectMap.Entry<BedrockPacketSerializer<BedrockPacket>> entry : this.serializers.int2ObjectEntrySet()) {
                 serializers[entry.getIntKey()] = entry.getValue();
             }
-            return new BedrockPacketCodec(protocolVersion, minecraftVersion, serializers, idBiMap, helper, raknetProtocolVersion);
+            return new BedrockPacketCodec(protocolVersion, minecraftVersion, serializers, idBiMap, helper, raknetProtocolVersion, prefixed);
         }
     }
 }

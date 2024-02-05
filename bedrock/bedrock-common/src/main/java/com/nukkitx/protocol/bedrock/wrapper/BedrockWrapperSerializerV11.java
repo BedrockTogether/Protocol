@@ -4,9 +4,12 @@ import com.nukkitx.network.VarInts;
 import com.nukkitx.protocol.bedrock.BedrockPacket;
 import com.nukkitx.protocol.bedrock.BedrockPacketCodec;
 import com.nukkitx.protocol.bedrock.BedrockSession;
+import com.nukkitx.protocol.bedrock.data.PacketCompressionAlgorithm;
 import com.nukkitx.protocol.bedrock.exception.PacketSerializeException;
 import com.nukkitx.protocol.bedrock.wrapper.compression.CompressionSerializer;
 import com.nukkitx.protocol.bedrock.wrapper.compression.NoCompression;
+import com.nukkitx.protocol.bedrock.wrapper.compression.SnappyCompression;
+import com.nukkitx.protocol.bedrock.wrapper.compression.ZlibCompression;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufUtil;
@@ -17,6 +20,7 @@ import java.util.zip.DataFormatException;
 public class BedrockWrapperSerializerV11 extends BedrockWrapperSerializer {
 
     private CompressionSerializer compressionSerializer = NoCompression.INSTANCE;
+    private boolean prefixed = false;
 
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketCodec codec, Collection<BedrockPacket> packets, int level, BedrockSession session) {
@@ -41,7 +45,12 @@ public class BedrockWrapperSerializerV11 extends BedrockWrapperSerializer {
                     packetBuffer.release();
                 }
             }
-            this.compressionSerializer.compress(uncompressed, buffer, level);
+            if (prefixed) {
+                buffer.writeByte(this.getCompressionHeader(compressionSerializer));
+                this.compressionSerializer.compress(uncompressed, buffer, level);
+            } else {
+                this.compressionSerializer.compress(uncompressed, buffer, level);
+            }
         } catch (DataFormatException e) {
             throw new RuntimeException("Unable to deflate buffer data", e);
         } finally {
@@ -53,7 +62,13 @@ public class BedrockWrapperSerializerV11 extends BedrockWrapperSerializer {
     public void deserialize(ByteBuf compressed, BedrockPacketCodec codec, Collection<BedrockPacket> packets, BedrockSession session) {
         ByteBuf decompressed = ByteBufAllocator.DEFAULT.ioBuffer();
         try {
-            this.compressionSerializer.decompress(compressed, decompressed, 12 * 1024 * 1024); // 12MBs
+            CompressionSerializer compression;
+            if (this.prefixed) {
+                compression = this.getCompression(compressed.readByte());
+            } else {
+                compression = compressionSerializer;
+            }
+            compression.decompress(compressed, decompressed, 12 * 1024 * 1024); // 12MBs
 
             while (decompressed.isReadable()) {
                 int length = VarInts.readUnsignedInt(decompressed);
@@ -85,11 +100,41 @@ public class BedrockWrapperSerializerV11 extends BedrockWrapperSerializer {
         }
     }
 
-    public void setCompressionSerializer(CompressionSerializer compressionSerializer) {
+    public void setCompressionSerializer(CompressionSerializer compressionSerializer, boolean prefixed) {
         this.compressionSerializer = compressionSerializer;
+        this.prefixed = prefixed;
     }
 
     public CompressionSerializer getCompressionSerializer() {
         return compressionSerializer;
+    }
+
+    public boolean isPrefixed() {
+        return prefixed;
+    }
+
+    protected final byte getCompressionHeader(CompressionSerializer compression) {
+        if (compression instanceof NoCompression) {
+            return (byte) 0xff;
+        } else if (compression instanceof ZlibCompression) {
+            return 0x00;
+        } else if (compression instanceof SnappyCompression) {
+            return 0x01;
+        }
+
+        throw new IllegalArgumentException("Unknown compression algorithm " + compression);
+    }
+
+    protected final CompressionSerializer getCompression(byte header) {
+        switch (header) {
+            case 0x00:
+                return ZlibCompression.INSTANCE;
+            case 0x01:
+                return SnappyCompression.INSTANCE;
+            case (byte) 0xff:
+                return NoCompression.INSTANCE;
+        }
+
+        throw new IllegalArgumentException("Unknown compression algorithm " + header);
     }
 }

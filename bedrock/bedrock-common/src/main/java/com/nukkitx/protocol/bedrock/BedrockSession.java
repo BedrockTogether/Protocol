@@ -135,9 +135,11 @@ public abstract class BedrockSession implements MinecraftSession<BedrockPacket> 
     public void sendWrapped(Collection<BedrockPacket> packets, boolean encrypt, boolean immediate, boolean incompressible) {
         ByteBuf compressed = ByteBufAllocator.DEFAULT.ioBuffer();
         CompressionSerializer compression = null;
+        Boolean prefixed = null;
         if (incompressible && this.wrapperSerializer instanceof BedrockWrapperSerializerV11) {
             compression = ((BedrockWrapperSerializerV11) this.wrapperSerializer).getCompressionSerializer();
-            ((BedrockWrapperSerializerV11) this.wrapperSerializer).setCompressionSerializer(NoCompression.INSTANCE);
+            prefixed = ((BedrockWrapperSerializerV11) this.wrapperSerializer).isPrefixed();
+            ((BedrockWrapperSerializerV11) this.wrapperSerializer).setCompressionSerializer(NoCompression.INSTANCE, false);
         }
         try {
             this.wrapperSerializer.serialize(compressed, this.packetCodec, packets, this.compressionLevel, this);
@@ -149,7 +151,7 @@ public abstract class BedrockSession implements MinecraftSession<BedrockPacket> 
                 compressed.release();
             }
             if (compression != null) {
-                ((BedrockWrapperSerializerV11) this.wrapperSerializer).setCompressionSerializer(compression);
+                ((BedrockWrapperSerializerV11) this.wrapperSerializer).setCompressionSerializer(compression, prefixed);
             }
         }
     }
@@ -383,15 +385,17 @@ public abstract class BedrockSession implements MinecraftSession<BedrockPacket> 
             CompressionSerializer serializer;
             switch (algorithm) {
                 case ZLIB:
-                    serializer = new ZlibCompression();
+                    serializer = ZlibCompression.INSTANCE;
                     break;
                 case SNAPPY:
-                    serializer = new SnappyCompression();
+                    serializer = SnappyCompression.INSTANCE;
                     break;
+                case NONE:
+                    serializer = NoCompression.INSTANCE;
                 default:
                     throw new UnsupportedOperationException("Unsupported compression algorithm");
             }
-            ((BedrockWrapperSerializerV11) this.wrapperSerializer).setCompressionSerializer(serializer);
+            ((BedrockWrapperSerializerV11) this.wrapperSerializer).setCompressionSerializer(serializer, packetCodec.isPrefixed());
         } else {
             throw new UnsupportedOperationException("Compression is not supported on this version of the protocol");
         }

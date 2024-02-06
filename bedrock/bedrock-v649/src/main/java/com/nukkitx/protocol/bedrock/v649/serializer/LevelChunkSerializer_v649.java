@@ -16,13 +16,13 @@ public class LevelChunkSerializer_v649 extends LevelChunkSerializer_v486 {
     public static final LevelChunkSerializer_v649 INSTANCE = new LevelChunkSerializer_v649();
 
     @Override
-    public void serialize(ByteBuf buffer, BedrockPacketHelper helper, LevelChunkPacket packet) {
+    protected void writeChunkLocation(ByteBuf buffer, LevelChunkPacket packet) {
         super.writeChunkLocation(buffer, packet);
         VarInts.writeInt(buffer, packet.getDimension());
     }
 
     @Override
-    public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, LevelChunkPacket packet) {
+    protected void readChunkLocation(ByteBuf buffer, LevelChunkPacket packet) {
         super.readChunkLocation(buffer, packet);
         packet.setDimension(VarInts.readInt(buffer));
     }

@@ -12,6 +12,10 @@ import lombok.EqualsAndHashCode;
 public class SetEntityMotionPacket extends BedrockPacket {
     private long runtimeEntityId;
     private Vector3f motion;
+    /**
+     * @since v662
+     */
+    private long tick;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {

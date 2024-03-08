@@ -16,15 +16,24 @@ public class ResourcePacksInfoSerializer_v618 extends ResourcePacksInfoSerialize
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet, BedrockSession session) {
         super.serialize(buffer, helper, packet);
+        this.writeCDNEntries(buffer, helper, packet);
+    }
+
+    protected void writeCDNEntries(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet) {
         helper.writeArray(buffer, packet.getCDNEntries(), (buf, entry) -> {
             helper.writeString(buf, entry.getPackId());
             helper.writeString(buf, entry.getRemoteUrl());
         });
     }
 
+
     @Override
     public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet, BedrockSession session) {
         super.deserialize(buffer, helper, packet);
+        this.readCDNEntries(buffer, helper, packet);
+    }
+
+    protected void readCDNEntries(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet) {
         helper.readArray(buffer, packet.getCDNEntries(), buf -> new ResourcePacksInfoPacket.CDNEntry(helper.readString(buf), helper.readString(buf)));
     }
 }

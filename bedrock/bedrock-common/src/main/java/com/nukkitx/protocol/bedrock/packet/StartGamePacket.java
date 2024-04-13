@@ -179,6 +179,10 @@ public class StartGamePacket extends BedrockPacket {
      * @since v589
      */
     private NetworkPermissions networkPermissions = NetworkPermissions.DEFAULT;
+    /**
+     * @since v671
+     */
+    private boolean hardcore;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {

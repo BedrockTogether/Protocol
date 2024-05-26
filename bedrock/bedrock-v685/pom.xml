@@ -8,13 +8,12 @@
         <version>2.9.24-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>bedrock-v440</artifactId>
+    <artifactId>bedrock-v685</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.nukkitx.protocol</groupId>
-            <artifactId>bedrock-v431</artifactId>
+            <artifactId>bedrock-v671</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

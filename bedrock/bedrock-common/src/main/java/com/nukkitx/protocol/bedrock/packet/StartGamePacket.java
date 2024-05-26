@@ -183,6 +183,18 @@ public class StartGamePacket extends BedrockPacket {
      * @since v671
      */
     private boolean hardcore;
+    /**
+     * @since v685
+     */
+    private String serverId;
+    /**
+     * @since v685
+     */
+    private String worldId;
+    /**
+     * @since v685
+     */
+    private String scenarioId;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {

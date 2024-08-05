@@ -1,21 +1,20 @@
-package com.nukkitx.protocol.bedrock.v422.serializer;
+package com.nukkitx.protocol.bedrock.v712.serializer;
 
 import com.nukkitx.protocol.bedrock.BedrockPacketHelper;
 import com.nukkitx.protocol.bedrock.packet.ResourcePacksInfoPacket;
-import com.nukkitx.protocol.bedrock.v332.serializer.ResourcePacksInfoSerializer_v332;
+import com.nukkitx.protocol.bedrock.v662.serializer.ResourcePacksInfoSerializer_v622;
 import io.netty.buffer.ByteBuf;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ResourcePacksInfoSerializer_v422 extends ResourcePacksInfoSerializer_v332 {
-    public static final ResourcePacksInfoSerializer_v422 INSTANCE = new ResourcePacksInfoSerializer_v422();
+public class ResourcePacksInfoSerializer_v712 extends ResourcePacksInfoSerializer_v622 {
+    public static final ResourcePacksInfoSerializer_v712 INSTANCE = new ResourcePacksInfoSerializer_v712();
 
-    public void writeResourcePackEntry(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket.Entry entry, boolean resource) {
+    @Override
+    public void writeEntry(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket.Entry entry, boolean resource) {
         super.writeEntry(buffer, helper, entry, resource);
-        if (resource) {
-            buffer.writeBoolean(entry.isRaytracingCapable());
-        }
+        buffer.writeBoolean(entry.isAddonPack());
     }
 
     @Override
@@ -27,8 +26,10 @@ public class ResourcePacksInfoSerializer_v422 extends ResourcePacksInfoSerialize
         String subPackName = helper.readString(buffer);
         String contentId = helper.readString(buffer);
         boolean isScripting = buffer.readBoolean();
+        boolean isAddonPack = buffer.readBoolean();
         boolean raytracingCapable = resource && buffer.readBoolean();
         return new ResourcePacksInfoPacket.Entry(packId, packVersion, packSize, contentKey, subPackName, contentId,
-                isScripting, raytracingCapable, false);
+                isScripting, raytracingCapable, isAddonPack);
     }
 }
+

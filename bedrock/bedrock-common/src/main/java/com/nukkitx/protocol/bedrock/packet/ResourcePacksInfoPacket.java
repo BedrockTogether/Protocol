@@ -46,6 +46,10 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
         private final String contentId;
         private final boolean scripting;
         private final boolean raytracingCapable;
+        /**
+         * @since v712
+         */
+        private final boolean addonPack;
     }
 
     @Value

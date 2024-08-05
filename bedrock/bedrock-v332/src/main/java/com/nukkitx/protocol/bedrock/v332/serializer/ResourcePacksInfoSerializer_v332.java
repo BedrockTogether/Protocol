@@ -15,27 +15,26 @@ public class ResourcePacksInfoSerializer_v332 extends ResourcePacksInfoSerialize
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet) {
         buffer.writeBoolean(packet.isForcedToAccept());
         buffer.writeBoolean(packet.isScriptingEnabled());
-        helper.writeArray(buffer, packet.getBehaviorPackInfos(), ByteBuf::writeShortLE, this::writeEntry);
-        helper.writeArray(buffer, packet.getResourcePackInfos(), ByteBuf::writeShortLE, this::writeEntry);
+        writePacks(buffer, packet.getBehaviorPackInfos(), helper, false);
+        writePacks(buffer, packet.getResourcePackInfos(), helper, true);
     }
 
     @Override
     public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet) {
         packet.setForcedToAccept(buffer.readBoolean());
         packet.setScriptingEnabled(buffer.readBoolean());
-        helper.readArray(buffer, packet.getBehaviorPackInfos(), ByteBuf::readUnsignedShortLE, this::readEntry);
-        helper.readArray(buffer, packet.getResourcePackInfos(), ByteBuf::readUnsignedShortLE, this::readEntry);
+        readPacks(buffer, packet.getBehaviorPackInfos(), helper, false);
+        readPacks(buffer, packet.getResourcePackInfos(), helper, true);
     }
 
     @Override
-    public void writeEntry(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket.Entry entry) {
-        super.writeEntry(buffer, helper, entry);
-
+    public void writeEntry(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket.Entry entry, boolean resource) {
+        super.writeEntry(buffer, helper, entry, resource);
         buffer.writeBoolean(entry.isScripting());
     }
 
     @Override
-    public ResourcePacksInfoPacket.Entry readEntry(ByteBuf buffer, BedrockPacketHelper helper) {
+    public ResourcePacksInfoPacket.Entry readEntry(ByteBuf buffer, BedrockPacketHelper helper, boolean resource) {
         String packId = helper.readString(buffer);
         String packVersion = helper.readString(buffer);
         long packSize = buffer.readLongLE();
@@ -44,6 +43,6 @@ public class ResourcePacksInfoSerializer_v332 extends ResourcePacksInfoSerialize
         String contentId = helper.readString(buffer);
         boolean isScripting = buffer.readBoolean();
         return new ResourcePacksInfoPacket.Entry(packId, packVersion, packSize, contentKey, subPackName, contentId,
-                isScripting, false);
+                isScripting, false, false);
     }
 }

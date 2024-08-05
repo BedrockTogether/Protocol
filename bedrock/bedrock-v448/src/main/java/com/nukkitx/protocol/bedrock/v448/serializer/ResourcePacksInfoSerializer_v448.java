@@ -17,8 +17,8 @@ public class ResourcePacksInfoSerializer_v448 extends ResourcePacksInfoSerialize
         buffer.writeBoolean(packet.isForcedToAccept());
         buffer.writeBoolean(packet.isScriptingEnabled());
         buffer.writeBoolean(packet.isForcingServerPacksEnabled());
-        helper.writeArray(buffer, packet.getBehaviorPackInfos(), ByteBuf::writeShortLE, this::writeEntry);
-        helper.writeArray(buffer, packet.getResourcePackInfos(), ByteBuf::writeShortLE, this::writeResourcePackEntry);
+        writePacks(buffer, packet.getBehaviorPackInfos(), helper, false);
+        writePacks(buffer, packet.getResourcePackInfos(), helper, true);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ResourcePacksInfoSerializer_v448 extends ResourcePacksInfoSerialize
         packet.setForcedToAccept(buffer.readBoolean());
         packet.setScriptingEnabled(buffer.readBoolean());
         packet.setForcingServerPacksEnabled(buffer.readBoolean());
-        helper.readArray(buffer, packet.getBehaviorPackInfos(), ByteBuf::readUnsignedShortLE, this::readEntry);
-        helper.readArray(buffer, packet.getResourcePackInfos(), ByteBuf::readUnsignedShortLE, this::readResourcePackEntry);
+        readPacks(buffer, packet.getBehaviorPackInfos(), helper, false);
+        readPacks(buffer, packet.getResourcePackInfos(), helper, true);
     }
 }

@@ -12,6 +12,10 @@ public class DisconnectPacket extends BedrockPacket {
     private DisconnectFailReason reason = DisconnectFailReason.UNKNOWN;
     private boolean messageSkipped;
     private String kickMessage;
+    /**
+     * @since v712
+     */
+    private String filteredMessage = "";
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {
@@ -44,7 +48,7 @@ public class DisconnectPacket extends BedrockPacket {
         REALMS_SERVER_HIDDEN,
         REALMS_SERVER_DISABLED_BETA,
         REALMS_SERVER_DISABLED,
-        CROSS_PLATFORM_DISALLOWED,
+        CROSS_PLATFORM_DISABLED,
         CANT_CONNECT,
         SESSION_NOT_FOUND,
         CLIENT_SETTINGS_INCOMPATIBLE_WITH_SERVER,
@@ -112,7 +116,36 @@ public class DisconnectPacket extends BedrockPacket {
         CONN_NEGOTIATION_TIMEOUT,
         CONN_INACTIVITY_TIMEOUT,
         STALE_CONNECTION_BEING_REPLACED,
-        REALMS_SESSION_NOT_FOUND,
-        BAD_PACKET
+        /**
+         * @deprecated since v685
+         */
+        REALMS_SESSION_NOT_FOUND_DEPRECATED,
+        BAD_PACKET,
+        CONN_FAILED_TO_CREATE_OFFER,
+        CONN_FAILED_TO_CREATE_ANSWER,
+        CONN_FAILED_TO_SET_LOCAL_DESCRIPTION,
+        CONN_FAILED_TO_SET_REMOTE_DESCRIPTION,
+        CONN_NEGOTIATION_TIMEOUT_WAITING_FOR_RESPONSE,
+        CONN_NEGOTIATION_TIMEOUT_WAITING_FOR_ACCEPT,
+        CONN_INCOMING_CONNECTION_IGNORED,
+        CONN_SIGNALING_PARSING_FAILURE,
+        CONN_SIGNALING_UNKNOWN_ERROR,
+        CONN_SIGNALING_UNICAST_DELIVERY_FAILED,
+        CONN_SIGNALING_BROADCAST_DELIVERY_FAILED,
+        CONN_SIGNALING_GENERIC_DELIVERY_FAILED,
+        EDITOR_MISMATCH_EDITOR_WORLD,
+        EDITOR_MISMATCH_VANILLA_WORLD,
+        WORLD_TRANSFER_NOT_PRIMARY_CLIENT,
+        SERVER_SHUTDOWN,
+        GAME_SETUP_CANCELLED,
+        GAME_SETUP_FAILED,
+        NO_VENUE,
+        CONN_SIGNALING_SIGN_IN_FAILED,
+        SESSION_ACCESS_DENIED,
+        SERVICE_SIGN_IN_ISSUE,
+        CONN_NO_SIGNALING_CHANNEL,
+        CONN_NOT_LOGGED_IN,
+        CONN_CLIENT_SIGNALING_ERROR,
+        SUB_CLIENT_LOGIN_DISABLED
     }
 }

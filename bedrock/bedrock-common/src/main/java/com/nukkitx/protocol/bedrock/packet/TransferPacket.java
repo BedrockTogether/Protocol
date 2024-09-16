@@ -11,6 +11,10 @@ import lombok.EqualsAndHashCode;
 public class TransferPacket extends BedrockPacket {
     private String address;
     private int port;
+    /**
+     * @since v729
+     */
+    private boolean reloadWorld;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {

@@ -50,6 +50,10 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
          * @since v712
          */
         private final boolean addonPack;
+        /**
+         * @since v748
+         */
+        String cdnUrl;
     }
 
     @Value

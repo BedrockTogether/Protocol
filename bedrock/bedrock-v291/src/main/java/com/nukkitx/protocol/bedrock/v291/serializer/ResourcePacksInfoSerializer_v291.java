@@ -50,13 +50,13 @@ public class ResourcePacksInfoSerializer_v291 implements BedrockPacketSerializer
         String contentKey = helper.readString(buffer);
         String subPackName = helper.readString(buffer);
         String contentId = helper.readString(buffer);
-        return new ResourcePacksInfoPacket.Entry(packId, packVersion, packSize, contentKey, subPackName, contentId, false, false, false, null);
+        return ResourcePacksInfoPacket.Entry.from(packId, packVersion, packSize, contentKey, subPackName, contentId, false, false, false, null);
     }
 
     public void writeEntry(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket.Entry entry, boolean resource) {
         requireNonNull(entry, "ResourcePacketInfoPacket entry was null");
 
-        helper.writeString(buffer, entry.getPackId());
+        helper.writeString(buffer, entry.getPackId().toString());
         helper.writeString(buffer, entry.getPackVersion());
         buffer.writeLongLE(entry.getPackSize());
         helper.writeString(buffer, entry.getContentKey());

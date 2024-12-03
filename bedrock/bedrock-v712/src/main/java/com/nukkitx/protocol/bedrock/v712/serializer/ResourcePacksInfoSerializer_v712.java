@@ -28,7 +28,7 @@ public class ResourcePacksInfoSerializer_v712 extends ResourcePacksInfoSerialize
         boolean isScripting = buffer.readBoolean();
         boolean isAddonPack = buffer.readBoolean();
         boolean raytracingCapable = resource && buffer.readBoolean();
-        return new ResourcePacksInfoPacket.Entry(packId, packVersion, packSize, contentKey, subPackName, contentId,
+        return ResourcePacksInfoPacket.Entry.from(packId, packVersion, packSize, contentKey, subPackName, contentId,
                 isScripting, raytracingCapable, isAddonPack, null);
     }
 }

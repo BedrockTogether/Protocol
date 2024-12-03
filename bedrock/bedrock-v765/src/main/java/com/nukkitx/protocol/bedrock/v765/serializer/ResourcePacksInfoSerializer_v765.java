@@ -1,23 +1,27 @@
-package com.nukkitx.protocol.bedrock.v748.serializer;
+package com.nukkitx.protocol.bedrock.v765.serializer;
 
 import com.nukkitx.protocol.bedrock.BedrockPacketHelper;
 import com.nukkitx.protocol.bedrock.BedrockSession;
 import com.nukkitx.protocol.bedrock.packet.ResourcePacksInfoPacket;
-import com.nukkitx.protocol.bedrock.v729.serializer.ResourcePacksInfoSerializer_v729;
+import com.nukkitx.protocol.bedrock.v748.serializer.ResourcePacksInfoSerializer_v748;
 import io.netty.buffer.ByteBuf;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ResourcePacksInfoSerializer_v748 extends ResourcePacksInfoSerializer_v729 {
-    public static final ResourcePacksInfoSerializer_v748 INSTANCE = new ResourcePacksInfoSerializer_v748();
+public class ResourcePacksInfoSerializer_v765 extends ResourcePacksInfoSerializer_v748 {
+    public static final ResourcePacksInfoSerializer_v765 INSTANCE = new ResourcePacksInfoSerializer_v765();
 
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet, BedrockSession session) {
         buffer.writeBoolean(packet.isForcedToAccept());
         buffer.writeBoolean(packet.isHasAddonPacks());
         buffer.writeBoolean(packet.isScriptingEnabled());
-        this.writePacks(buffer, packet.getResourcePackInfos(), helper, true);
+        helper.writeUuid(buffer, packet.getWorldTemplateId());
+        helper.writeString(buffer, packet.getWorldTemplateVersion());
+        writePacks(buffer, packet.getResourcePackInfos(), helper, true);
     }
 
     @Override
@@ -25,18 +29,30 @@ public class ResourcePacksInfoSerializer_v748 extends ResourcePacksInfoSerialize
         packet.setForcedToAccept(buffer.readBoolean());
         packet.setHasAddonPacks(buffer.readBoolean());
         packet.setScriptingEnabled(buffer.readBoolean());
-        this.readPacks(buffer, packet.getResourcePackInfos(), helper, true);
+        packet.setWorldTemplateId(helper.readUuid(buffer));
+        packet.setWorldTemplateVersion(helper.readString(buffer));
+        readPacks(buffer, packet.getResourcePackInfos(), helper, true);
     }
 
     @Override
     public void writeEntry(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket.Entry entry, boolean resource) {
-        super.writeEntry(buffer, helper, entry, resource);
-        helper.writeString(buffer, entry.getCdnUrl());
+        helper.writeUuid(buffer, entry.getPackId());
+        helper.writeString(buffer, entry.getPackVersion());
+        buffer.writeLongLE(entry.getPackSize());
+        helper.writeString(buffer, entry.getContentKey());
+        helper.writeString(buffer, entry.getSubPackName());
+        helper.writeString(buffer, entry.getContentId());
+        buffer.writeBoolean(entry.isScripting());
+        buffer.writeBoolean(entry.isAddonPack());
+        if (resource) {
+            buffer.writeBoolean(entry.isRaytracingCapable());
+        }
+        helper.writeString(buffer, entry.getCdnUrl() == null ? "" : entry.getCdnUrl());
     }
 
     @Override
     public ResourcePacksInfoPacket.Entry readEntry(ByteBuf buffer, BedrockPacketHelper helper, boolean resource) {
-        String packId = helper.readString(buffer);
+        UUID packId = helper.readUuid(buffer);
         String packVersion = helper.readString(buffer);
         long packSize = buffer.readLongLE();
         String contentKey = helper.readString(buffer);
@@ -46,7 +62,7 @@ public class ResourcePacksInfoSerializer_v748 extends ResourcePacksInfoSerialize
         boolean isAddonPack = buffer.readBoolean();
         boolean raytracingCapable = resource && buffer.readBoolean();
         String cdnUrl = helper.readString(buffer);
-        return ResourcePacksInfoPacket.Entry.from(packId, packVersion, packSize, contentKey, subPackName, contentId,
+        return new ResourcePacksInfoPacket.Entry(packId, packVersion, packSize, contentKey, subPackName, contentId,
                 isScripting, raytracingCapable, isAddonPack, cdnUrl);
     }
 }

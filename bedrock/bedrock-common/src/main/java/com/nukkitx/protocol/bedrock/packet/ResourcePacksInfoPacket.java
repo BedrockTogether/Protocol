@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(doNotUseGetters = true, callSuper = false)
@@ -24,8 +25,17 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
     private boolean forcingServerPacksEnabled;
     /**
      * @since v618
+     * @deprecated since v729
      */
     private List<CDNEntry> CDNEntries = new ObjectArrayList<>();
+    /**
+     * @since v765
+     */
+    private UUID worldTemplateId;
+    /**
+     * @since v765
+     */
+    private String worldTemplateVersion;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {
@@ -38,7 +48,7 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
 
     @Value
     public static class Entry {
-        private final String packId;
+        private final UUID packId;
         private final String packVersion;
         private final long packSize;
         private final String contentKey;
@@ -54,6 +64,14 @@ public class ResourcePacksInfoPacket extends BedrockPacket {
          * @since v748
          */
         String cdnUrl;
+
+        public static Entry from(String packId, String packVersion, long packSize, String contentKey, String subPackName, String contentId, boolean scripting, boolean raytracingCapable, boolean addonPack, String cdnUrl) {
+            return new Entry(UUID.fromString(packId), packVersion, packSize, contentKey, subPackName, contentId, scripting, raytracingCapable, addonPack, cdnUrl);
+        }
+
+        public String getPackIdString() {
+            return packId.toString();
+        }
     }
 
     @Value

@@ -43,11 +43,7 @@ public class StartGameSerializer_v419 implements BedrockPacketSerializer<StartGa
             packetHelper.writeTag(buf, block.getProperties());
         });
 
-        helper.writeArray(buffer, packet.getItemEntries(), (buf, packetHelper, entry) -> {
-            packetHelper.writeString(buf, entry.getIdentifier());
-            buf.writeShortLE(entry.getId());
-            buf.writeBoolean(entry.isComponentBased());
-        });
+        writeItemEntries(buffer, helper, packet);
 
         helper.writeString(buffer, packet.getMultiplayerCorrelationId());
         buffer.writeBoolean(packet.isInventoriesServerAuthoritative());
@@ -77,15 +73,7 @@ public class StartGameSerializer_v419 implements BedrockPacketSerializer<StartGa
             return new BlockPropertyData(name, properties);
         });
 
-        helper.readArray(buffer, packet.getItemEntries(), session, (buf, packetHelper, aSession) -> {
-            String identifier = packetHelper.readString(buf);
-            short id = buf.readShortLE();
-            boolean componentBased = buf.readBoolean();
-            if (identifier.equals(packetHelper.getBlockingItemIdentifier())) {
-                aSession.getHardcodedBlockingId().set(id);
-            }
-            return new StartGamePacket.ItemEntry(identifier, id, componentBased);
-        });
+        readItemEntries(buffer, helper, packet, session);
 
         packet.setMultiplayerCorrelationId(helper.readString(buffer));
         packet.setInventoriesServerAuthoritative(buffer.readBoolean());
@@ -192,4 +180,23 @@ public class StartGameSerializer_v419 implements BedrockPacketSerializer<StartGa
         VarInts.writeInt(buffer, (int) seed);
     }
 
+    protected void writeItemEntries(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet) {
+        helper.writeArray(buffer, packet.getItemEntries(), (buf, packetHelper, entry) -> {
+            packetHelper.writeString(buf, entry.getIdentifier());
+            buf.writeShortLE(entry.getId());
+            buf.writeBoolean(entry.isComponentBased());
+        });
+    }
+
+    protected void readItemEntries(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet, BedrockSession session) {
+        helper.readArray(buffer, packet.getItemEntries(), session, (buf, packetHelper, aSession) -> {
+            String identifier = packetHelper.readString(buf);
+            short id = buf.readShortLE();
+            boolean componentBased = buf.readBoolean();
+            if (identifier.equals(packetHelper.getBlockingItemIdentifier())) {
+                aSession.getHardcodedBlockingId().set(id);
+            }
+            return new StartGamePacket.ItemEntry(identifier, id, componentBased);
+        });
+    }
 }

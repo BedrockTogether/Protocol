@@ -385,6 +385,7 @@ import com.nukkitx.protocol.bedrock.v671.serializer.ResourcePackStackSerializer_
 import com.nukkitx.protocol.bedrock.v712.serializer.DisconnectSerializer_v712;
 import com.nukkitx.protocol.bedrock.v729.serializer.TransferSerializer_v729;
 import com.nukkitx.protocol.bedrock.v765.serializer.ResourcePacksInfoSerializer_v765;
+import com.nukkitx.protocol.bedrock.v776.serializer.ItemComponentSerializer_v776;
 import com.nukkitx.protocol.bedrock.v776.serializer.StartGameSerializer_v776;
 import lombok.experimental.UtilityClass;
 
@@ -554,7 +555,7 @@ public class Bedrock_v776 {
             .registerPacket(CameraShakePacket.class, CameraShakeSerializer_v428.INSTANCE, 159)
             .registerPacket(PlayerFogPacket.class, PlayerFogSerializer_v419.INSTANCE, 160)
             .registerPacket(CorrectPlayerMovePredictionPacket.class, CorrectPlayerMovePredictionSerializer_v419.INSTANCE, 161)
-            .registerPacket(ItemComponentPacket.class, ItemComponentSerializer_v419.INSTANCE, 162)
+            .registerPacket(ItemComponentPacket.class, ItemComponentSerializer_v776.INSTANCE, 162)
             .registerPacket(FilterTextPacket.class, FilterTextSerializer_v422.INSTANCE, 163)
             .registerPacket(ClientboundDebugRendererPacket.class, ClientboundDebugRendererSerializer_v428.INSTANCE, 164)
             .registerPacket(SyncEntityPropertyPacket.class, SyncEntityPropertySerializer_v440.INSTANCE, 165)

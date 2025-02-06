@@ -292,7 +292,6 @@ import com.nukkitx.protocol.bedrock.v388.serializer.TickSyncSerializer_v388;
 import com.nukkitx.protocol.bedrock.v390.serializer.PlayerListSerializer_v390;
 import com.nukkitx.protocol.bedrock.v390.serializer.PlayerSkinSerializer_v390;
 import com.nukkitx.protocol.bedrock.v407.serializer.CodeBuilderSerializer_v407;
-import com.nukkitx.protocol.bedrock.v407.serializer.CreativeContentSerializer_v407;
 import com.nukkitx.protocol.bedrock.v407.serializer.DebugInfoSerializer_v407;
 import com.nukkitx.protocol.bedrock.v407.serializer.EmoteListSerializer_v407;
 import com.nukkitx.protocol.bedrock.v407.serializer.InventoryContentSerializer_v407;
@@ -310,7 +309,6 @@ import com.nukkitx.protocol.bedrock.v407.serializer.SetSpawnPositionSerializer_v
 import com.nukkitx.protocol.bedrock.v407.serializer.UpdatePlayerGameTypeSerializer_v407;
 import com.nukkitx.protocol.bedrock.v419.serializer.ContainerCloseSerializer_v419;
 import com.nukkitx.protocol.bedrock.v419.serializer.CorrectPlayerMovePredictionSerializer_v419;
-import com.nukkitx.protocol.bedrock.v419.serializer.ItemComponentSerializer_v419;
 import com.nukkitx.protocol.bedrock.v419.serializer.MotionPredictionHintsSerializer_v419;
 import com.nukkitx.protocol.bedrock.v419.serializer.MoveEntityDeltaSerializer_v419;
 import com.nukkitx.protocol.bedrock.v419.serializer.MovePlayerSerializer_v419;
@@ -385,6 +383,7 @@ import com.nukkitx.protocol.bedrock.v671.serializer.ResourcePackStackSerializer_
 import com.nukkitx.protocol.bedrock.v712.serializer.DisconnectSerializer_v712;
 import com.nukkitx.protocol.bedrock.v729.serializer.TransferSerializer_v729;
 import com.nukkitx.protocol.bedrock.v765.serializer.ResourcePacksInfoSerializer_v765;
+import com.nukkitx.protocol.bedrock.v776.serializer.CreativeContentSerializer_v776;
 import com.nukkitx.protocol.bedrock.v776.serializer.ItemComponentSerializer_v776;
 import com.nukkitx.protocol.bedrock.v776.serializer.StartGameSerializer_v776;
 import lombok.experimental.UtilityClass;
@@ -538,7 +537,7 @@ public class Bedrock_v776 {
             .registerPacket(CompletedUsingItemPacket.class, CompletedUsingItemSerializer_v388.INSTANCE, 142)
             .registerPacket(NetworkSettingsPacket.class, NetworkSettingsSerializer_v554.INSTANCE, 143)
             .registerPacket(PlayerAuthInputPacket.class, PlayerAuthInputSerializer_v527.INSTANCE, 144)
-            .registerPacket(CreativeContentPacket.class, CreativeContentSerializer_v407.INSTANCE, 145)
+            .registerPacket(CreativeContentPacket.class, CreativeContentSerializer_v776.INSTANCE, 145)
             .registerPacket(PlayerEnchantOptionsPacket.class, PlayerEnchantOptionsSerializer_v407.INSTANCE, 146)
             .registerPacket(ItemStackRequestPacket.class, ItemStackRequestSerializer_v407.INSTANCE, 147)
             .registerPacket(ItemStackResponsePacket.class, ItemStackResponseSerializer_v428.INSTANCE, 148)

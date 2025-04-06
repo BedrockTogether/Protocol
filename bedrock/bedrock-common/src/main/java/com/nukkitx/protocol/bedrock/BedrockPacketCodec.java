@@ -114,6 +114,7 @@ public final class BedrockPacketCodec {
         builder.raknetProtocolVersion = this.raknetProtocolVersion;
         builder.minecraftVersion = this.minecraftVersion;
         builder.helper = this.helper;
+        builder.prefixed = this.prefixed;
 
         return builder;
     }

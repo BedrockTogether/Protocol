@@ -734,7 +734,6 @@ public abstract class BedrockPacketHelper {
     }
 
     public <T> void writeOptional(ByteBuf buffer, Predicate<T> isPresent, T object, BiConsumer<ByteBuf, T> consumer) {
-        Preconditions.checkNotNull(object, "object");
         Preconditions.checkNotNull(consumer, "read consumer");
 
         boolean exists = isPresent.test(object);

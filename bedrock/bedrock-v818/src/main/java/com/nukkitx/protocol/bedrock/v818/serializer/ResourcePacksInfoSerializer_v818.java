@@ -1,6 +1,7 @@
 package com.nukkitx.protocol.bedrock.v818.serializer;
 
 import com.nukkitx.protocol.bedrock.BedrockPacketHelper;
+import com.nukkitx.protocol.bedrock.BedrockSession;
 import com.nukkitx.protocol.bedrock.packet.ResourcePacksInfoPacket;
 import com.nukkitx.protocol.bedrock.v765.serializer.ResourcePacksInfoSerializer_v765;
 import io.netty.buffer.ByteBuf;
@@ -13,7 +14,7 @@ public class ResourcePacksInfoSerializer_v818 extends ResourcePacksInfoSerialize
     public static final ResourcePacksInfoSerializer_v818 INSTANCE = new ResourcePacksInfoSerializer_v818();
 
     @Override
-    public void serialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet) {
+    public void serialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet, BedrockSession session) {
         buffer.writeBoolean(packet.isForcedToAccept());
         buffer.writeBoolean(packet.isHasAddonPacks());
         buffer.writeBoolean(packet.isScriptingEnabled());
@@ -24,7 +25,7 @@ public class ResourcePacksInfoSerializer_v818 extends ResourcePacksInfoSerialize
     }
 
     @Override
-    public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet) {
+    public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet, BedrockSession session) {
         packet.setForcedToAccept(buffer.readBoolean());
         packet.setHasAddonPacks(buffer.readBoolean());
         packet.setScriptingEnabled(buffer.readBoolean());

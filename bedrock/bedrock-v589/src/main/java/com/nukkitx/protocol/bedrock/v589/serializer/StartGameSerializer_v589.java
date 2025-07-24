@@ -17,13 +17,13 @@ public class StartGameSerializer_v589 extends StartGameSerializer_v582 {
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet, BedrockSession session) {
         super.serialize(buffer, helper, packet, session);
-        this.writeNetworkPermissions(buffer, helper, packet.getNetworkPermissions());
+        this.writeBeforeNetworkPermissions(buffer, helper, packet);
     }
 
     @Override
     public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet, BedrockSession session) {
         super.deserialize(buffer, helper, packet, session);
-        packet.setNetworkPermissions(this.readNetworkPermissions(buffer, helper));
+        this.readBeforeNetworkPermissions(buffer, helper, packet);
     }
 
     protected NetworkPermissions readNetworkPermissions(ByteBuf buffer, BedrockPacketHelper helper) {
@@ -33,5 +33,13 @@ public class StartGameSerializer_v589 extends StartGameSerializer_v582 {
 
     protected void writeNetworkPermissions(ByteBuf buffer, BedrockPacketHelper helper, NetworkPermissions permissions) {
         buffer.writeBoolean(permissions.isServerAuthSounds());
+    }
+
+    protected void readBeforeNetworkPermissions(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet) {
+        packet.setNetworkPermissions(this.readNetworkPermissions(buffer, helper));
+    }
+
+    protected void writeBeforeNetworkPermissions(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet) {
+        this.writeNetworkPermissions(buffer, helper, packet.getNetworkPermissions());
     }
 }

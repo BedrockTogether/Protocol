@@ -199,6 +199,10 @@ public class StartGamePacket extends BedrockPacket {
      * @since v818
      */
     private String ownerId;
+    /**
+     * @since v827
+     */
+    private boolean tickDeathSystemsEnabled;
 
     @Override
     public final boolean handle(BedrockPacketHandler handler) {

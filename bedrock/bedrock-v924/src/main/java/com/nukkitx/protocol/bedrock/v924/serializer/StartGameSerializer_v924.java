@@ -22,7 +22,7 @@ public class StartGameSerializer_v924 extends StartGameSerializer_v898 {
 
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet, BedrockSession session) {
-        super.serialize(buffer, helper, packet);
+        super.serialize(buffer, helper, packet, session);
         buffer.writeBoolean(false); //isHasServerJoinInformation(
         helper.writeString(buffer, packet.getServerId());
         helper.writeString(buffer, packet.getScenarioId());
@@ -32,7 +32,7 @@ public class StartGameSerializer_v924 extends StartGameSerializer_v898 {
 
     @Override
     public void deserialize(ByteBuf buffer, BedrockPacketHelper helper, StartGamePacket packet, BedrockSession session) {
-        super.deserialize(buffer, helper, packet);
+        super.deserialize(buffer, helper, packet, session);
         // ignore
         boolean hasServerJoinInformation = buffer.readBoolean();
         if (hasServerJoinInformation) {

@@ -16,18 +16,12 @@ public class ResourcePacksInfoSerializer_v765 extends ResourcePacksInfoSerialize
 
     @Override
     public void serialize(ByteBuf buffer, BedrockPacketHelper helper, ResourcePacksInfoPacket packet, BedrockSession session) {
-        helper.getLogConsumer().accept(
-                "Test12"
-        );
         buffer.writeBoolean(packet.isForcedToAccept());
         buffer.writeBoolean(packet.isHasAddonPacks());
         buffer.writeBoolean(packet.isScriptingEnabled());
         helper.writeUuid(buffer, packet.getWorldTemplateId());
         helper.writeString(buffer, packet.getWorldTemplateVersion());
         writePacks(buffer, packet.getResourcePackInfos(), helper, true);
-        helper.getLogConsumer().accept(
-                "Test13"
-        );
     }
 
     @Override

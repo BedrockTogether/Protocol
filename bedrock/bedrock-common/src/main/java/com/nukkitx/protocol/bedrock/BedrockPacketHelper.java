@@ -61,7 +61,6 @@ public abstract class BedrockPacketHelper {
     protected final Int2ObjectBiMap<ResourcePackType> resourcePackTypes = new Int2ObjectBiMap<>();
     protected final Int2ObjectBiMap<ContainerSlotType> containerSlotTypes = new Int2ObjectBiMap<>();
 
-    protected Consumer<String> logConsumer = (log) -> {};
 
     protected BedrockPacketHelper() {
         gameRuleTypes.defaultReturnValue(-1);
@@ -76,14 +75,6 @@ public abstract class BedrockPacketHelper {
         this.registerCommandParams();
         this.registerResourcePackTypes();
         this.registerContainerSlotTypes();
-    }
-
-    public void setLogConsumer(Consumer<String> logConsumer) {
-        this.logConsumer = logConsumer;
-    }
-
-    public Consumer<String> getLogConsumer() {
-        return logConsumer;
     }
 
     protected final void addGameRuleType(int index, Class<?> clazz) {
